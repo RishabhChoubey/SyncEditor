@@ -24,8 +24,7 @@ try {
   mongoose.connect(MONGOURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: true,
+
   });
 
   console.log("conected....to mongoose");

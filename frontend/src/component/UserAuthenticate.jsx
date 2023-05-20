@@ -77,7 +77,7 @@ const UserAuthenticate = () => {
             className={`${
               active == 0
                 ? "border-2 border-black lg:left-0 top-0 rounded-xl z-10"
-                : "lg:left-[-100%] top-[-150%] lg:top-0"
+                : "lg:left-[-150%] top-[-150%] lg:top-0"
             } auth_sec`}
           >
             {!dataSignIn.loading ? (

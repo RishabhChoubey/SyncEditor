@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  background-color: brown;
+}
+
+.front {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(138, 43, 226, 1);
+  border: 1px solid black;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  transform: translateY(-5px) translateX(2px);
+}
+.shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: hsl(0deg 0% 0% / 0.25);
+  transform: translateY(8px);
+}
+.button:hover .front {
+  transform: translateY(-2px);
+}
+/* .button:hover .shadow {
+  transform: translateY(0px);
+} */
+.url {
+  height: auto;
+  width: 100%;
+  word-break: break-all;
+  text-align: center;
+}

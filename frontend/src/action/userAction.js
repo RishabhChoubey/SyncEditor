@@ -52,7 +52,7 @@ const signin = (email, password) => async (dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST });
   console.log(email, password);
   try {
-    const { data } = await axios.post("http://localhost:4000/api/signin", {
+    const { data } = await axios.post(`${import.meta.env.VITE_APP_URL}/api/signin`, {
       email,
       password,
     });
@@ -71,7 +71,7 @@ const signin = (email, password) => async (dispatch) => {
 const register = (name, email, password) => async (dispatch) => {
   dispatch({ type: USER_REGISTER_REQUEST });
   try {
-    const { data } = await axios.post("http://localhost:4000/api/register", {
+    const { data } = await axios.post(`${import.meta.env.VITE_APP_URL}/api/register`, {
       name,
       email,
       password,

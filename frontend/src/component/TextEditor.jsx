@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import "./TextEditor.css";
-
+import copy from "../assets/link.png"
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import Cookie from "js-cookie";
 import { useSelector } from "react-redux";
@@ -29,7 +29,12 @@ const TextEditor = (props) => {
 
   if (user == null || participant == null) navigate("/");
 
-  const handleCopy = () => {};
+  const handleCopy = () => {
+    if(!navigator.clipboard) return
+
+    navigator.clipboard.writeText(url.href);
+    alert(`URL Copied :  ${url.href}`)
+  };
 
 
 
@@ -45,9 +50,9 @@ const TextEditor = (props) => {
 
   return (
     <>
-      <div className="absolute left-[2px] z-[10]" onClick={handleCopy}>
-        {" "}
-        copy
+      <div className="absolute left-[.25rem] top-[3rem] z-[10] h-5 w-5" onClick={handleCopy}>
+  
+       <img src={copy} alt="copy" className="h-full w-full active:scale-110"/>
       </div>
       <div
         className="w-[100%] h-[100%] bg-red-800 flex flex-col justify-center items-center relative p-3"

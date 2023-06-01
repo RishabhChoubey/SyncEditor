@@ -11,10 +11,16 @@ const user = require("./route/UserRoute");
 const socket = require("socket.io");
 const { isAuth, isAuthSocket, createOrGetDocument, isValide, getUserCreatedDocument } = require("./utility/util");
 const { useSocket } = require("./utility/useSocket");
-
+const cookieParser = require('cookie-parser');
 const server = http.createServer(app);
 
-app.use(cors());
+
+app.use(cookieParser());
+app.use(cors({
+  origin: "http://localhost:5173",
+  methods: ['GET', 'POST'],
+  credentials: true,
+},));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api", user);

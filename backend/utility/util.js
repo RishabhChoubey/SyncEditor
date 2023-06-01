@@ -2,14 +2,30 @@ const jwt = require("jsonwebtoken");
 const Document = require("../model/Document");
 
 const getToken = (user) => {
-  return jwt.sign(
+  const accessToken=jwt.sign(
     {
       id: user.id,
       name: user.name,
       email: user.email,
     },
-    process.env.SECRETKEY
+    process.env.SECRETKEY, {
+      expiresIn: '1m',
+  }
   );
+
+  const refreshToken=jwt.sign(
+    {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    },
+    process.env.REFRESHKEY, {
+      expiresIn: '1y',
+  }
+  );
+
+
+  return {refreshToken,accessToken}
 };
 const isAuth = (req, res, next) => {
   const token = req.headers.authorization;

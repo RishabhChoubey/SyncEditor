@@ -4,6 +4,8 @@ const {
   check,
   forget,
   verifyToken,
+  refresh,
+  logout,
 } = require("../controller/UserController");
 const express = require("express");
 const { isAuth } = require("../utility/util");
@@ -12,6 +14,8 @@ const router = express.Router();
 
 router.post("/signin", signin);
 router.post("/forget", forget);
+router.get("/refresh",refresh)
+router.get("/logout",logout)
 router.get("/verify/:token", verifyToken);
 router.post("/register", register);
 router.get("/", isAuth, check);

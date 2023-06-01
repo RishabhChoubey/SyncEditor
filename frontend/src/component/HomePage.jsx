@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import "./HomePage.css";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
@@ -28,7 +28,7 @@ const HomePage = () => {
     <>
       <div className=" gap-10 w-[100%] min-h-[100vh] flex flex-col bg-red-800 justify-center items-center p-4 ">
         <div className="container p-2">
-          <label for="email" className="input md:w-[50%]">
+          <label name="email" className="input md:w-[50%]">
             Enter participant email:
           </label>
           <input
@@ -49,7 +49,7 @@ const HomePage = () => {
           </button>
         </div>
         <div className="container p-2">
-          <label for="email" className="input md:w-[50%]">
+          <label name="email" className="input md:w-[50%]">
             Doc link:
           </label>
           <input
@@ -71,4 +71,4 @@ const HomePage = () => {
     </>
   );
 };
-export default HomePage;
+export default memo(HomePage);

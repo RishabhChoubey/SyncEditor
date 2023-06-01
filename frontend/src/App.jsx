@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { memo, useCallback, useEffect, useRef } from "react";
 import TextEditor from "./component/TextEditor";
 import {
   Route,
@@ -7,13 +7,25 @@ import {
   useNavigate,
   Link,
 } from "react-router-dom";
-import { logoutAction } from "./action/userAction";
+import { logoutAction ,getRefresh} from "./action/userAction";
 import HomePage from "./component/HomePage";
 import User from "./component/UserAuthenticate";
 import Documents from "./component/Documents";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Main from "./component/Main";
+import axios from "axios";
 function App() {
+ const dispatch=useDispatch();
+ const { userInfo,loading } = useSelector((state) => state.userSignin);
+
+  useEffect(()=>{
+
+  dispatch(getRefresh())
+
+  },[])
+  
+  if(loading)  return <div className="bold justify-center items-center bg-slate-600 h-screen w-screen">Loading...</div>
+ 
   return (
     <BrowserRouter>
       <Routes>
@@ -31,4 +43,4 @@ function App() {
   );
 }
 
-export default App;
+export default memo(App);

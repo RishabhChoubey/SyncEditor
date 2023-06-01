@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useHistory } from "react";
+import React, { useState, useEffect, useHistory, memo } from "react";
 import axios from "axios";
 import "tailwindcss/tailwind.css";
 import "./auth.css";
@@ -6,6 +6,8 @@ import { signin, register ,resetState} from "../action/userAction";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 const UserAuthenticate = () => {
+
+  console.log("  inside auth")
   const dispatch = useDispatch();
   const navigate = useNavigate();
   ///////////////////// Selector
@@ -23,8 +25,10 @@ const UserAuthenticate = () => {
   console.log(dataSignIn);
   console.log(dataReg);
 
+ 
   ////////////////////////// change form
   const switchToRegister = () => {
+    console.log("register")
     reset();
     setactive(1);
   };
@@ -164,7 +168,7 @@ const UserAuthenticate = () => {
             )}
           </div>
           <div className="regisBtn " onClick={switchToRegister}>
-            {" "}
+           
             register form
           </div>
         </div>
@@ -173,4 +177,4 @@ const UserAuthenticate = () => {
   );
 };
 
-export default UserAuthenticate;
+export default memo(UserAuthenticate);

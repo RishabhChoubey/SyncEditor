@@ -6,13 +6,14 @@ import { logoutAction } from "../action/userAction";
 const Main = () => {
   const dispatch = useDispatch();
   const naviagte = useNavigate();
-  const { userInfo } = useSelector((state) => state.userSignin);
-  console.log(userInfo);
+  const { userInfo,loading } = useSelector((state) => state.userSignin);
+  console.log(userInfo +"   Main  "+loading);
   
 
   useEffect(() => {
+    if(loading===true || loading === undefined)  return
     if (userInfo == null || userInfo == undefined) naviagte("/");
-  }, [userInfo]);
+  }, [userInfo,loading]);
   const logout = () => {
     dispatch(logoutAction());
   };

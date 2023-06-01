@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
+import socketio from "socket.io-client";
+
 import "./TextEditor.css";
 import copy from "../assets/link.png"
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
@@ -11,7 +13,10 @@ import useSocket from "../utility/useSocket";
 import useChangeState from "../utility/useChangeState";
 
 
+
 const TextEditor = (props) => {
+
+ const navigate = useNavigate()
   const url = window.location;
   console.log(url.href);
   const [searchParams] = useSearchParams();
@@ -19,7 +24,7 @@ const TextEditor = (props) => {
   const { id: documentId } = useParams();
   console.log(documentId, " ", last);
   const [socket, setsocket] = useState();
-  const navigate = useNavigate();
+
   const [quill, setquill] = useState();
 
   const { userInfo } = useSelector((state) => state.userSignin);
@@ -36,17 +41,12 @@ const TextEditor = (props) => {
     alert(`URL Copied :  ${url.href}`)
   };
 
+const wrapperRef= useEditor(setquill);
 
-
-
-  const wrapperRef= useEditor(setquill);
-
-  
-  useSocket(setsocket)
-
-
+ useSocket(setsocket)
 
  useChangeState(quill,socket,documentId,user,participant)
+
 
   return (
     <>

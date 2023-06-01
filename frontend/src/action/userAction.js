@@ -47,12 +47,20 @@ import {
 //     dispatch({ type: USER_UPDATE_FAIL, payload: error.message });
 //   }
 // };
+const api= axios.create({
+  baseURL:import.meta.env.VITE_APP_URL,
+  withCredentials: true,
+  headers: {
+      'Content-type': 'application/json',
+      Accept: 'application/json',
+  },
+})
 
 const signin = (email, password) => async (dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST });
   console.log(email, password);
   try {
-    const { data } = await axios.post(`${import.meta.env.VITE_APP_URL}/api/signin`, {
+    const { data } = await api.post(`/api/signin`, {
       email,
       password,
     });
@@ -61,9 +69,10 @@ const signin = (email, password) => async (dispatch) => {
       dispatch({ type: USER_SIGNIN_FAIL, payload: data.msg });
     } else {
       dispatch({ type: USER_SIGNIN_SUCCESS, payload: data.msg });
-      Cookie.set("userInfo", JSON.stringify(data.msg));
+      
     }
   } catch (error) {
+    console.log(error)
     dispatch({ type: USER_SIGNIN_FAIL, payload: { msg: "Try Again Later" } });
   }
 };
@@ -71,7 +80,7 @@ const signin = (email, password) => async (dispatch) => {
 const register = (name, email, password) => async (dispatch) => {
   dispatch({ type: USER_REGISTER_REQUEST });
   try {
-    const { data } = await axios.post(`${import.meta.env.VITE_APP_URL}/api/register`, {
+    const { data } = await api.post(`/api/register`, {
       name,
       email,
       password,
@@ -86,9 +95,20 @@ const register = (name, email, password) => async (dispatch) => {
     dispatch({ type: USER_REGISTER_FAIL, payload: data.msg });
   }
 };
+const getRefresh=()=>async(dispatch)=>{
+  dispatch({ type: USER_SIGNIN_REQUEST });
+  const { data }= await api.get("/api/refresh")
+  if (data.err) {
+    dispatch({ type: USER_SIGNIN_FAIL, payload: data.msg });
+  } else {
+    dispatch({ type: USER_SIGNIN_SUCCESS, payload: data.msg });
+    
+  }
+}
 
-const logoutAction = () => (dispatch) => {
-  Cookie.remove("userInfo");
+const logoutAction = () =>async (dispatch) => {
+  await api.get("/api/logout")
+  console.log("logout")
   dispatch({ type: USER_LOGOUT });
 };
 
@@ -145,5 +165,5 @@ export {
   resetForget,
   tokenVerify,
   updatePassword,
-  resetState
+  resetState,getRefresh
 };

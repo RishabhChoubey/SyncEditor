@@ -19,36 +19,33 @@ import {
 import Cookie from "js-cookie";
 
 function userSigReducer(state = {}, action) {
-  const cookie = Cookie.get("userInfo");
-  const user = cookie ? JSON.parse(cookie) : cookie;
   switch (action.type) {
     case USER_SIGNIN_REQUEST:
-      return { loading: true, success: false, userInfo: user };
+      return { ...state,loading: true, success: false };
     case USER_SIGNIN_SUCCESS:
-      return { loading: false, userInfo: action.payload, success: true };
+      return {  userInfo: action.payload, success: true,loading: false, };
     case USER_SIGNIN_FAIL:
-      return { loading: false, error: action.payload, success: false };
+      return {  error: action.payload, success: false,loading: false, };
     case USER_LOGOUT:
-      return {};
+      return {...state,userInfo:null,success:false};
     case "UNSUCCESS":
-      return { userInfo: user };
+      return { userInfo: null,loading:false };
       case "RESET":
-        return { userInfo: user };
+        return { userInfo: null,loading:false };
 
     default:
       return state;
   }
 }
 function userResReducer(state = {}, action) {
-  const cookie = Cookie.get("userInfo");
-  const user = cookie ? JSON.parse(cookie) : cookie;
+
   switch (action.type) {
     case USER_REGISTER_REQUEST:
       return { loading: true, success: false };
     case USER_REGISTER_SUCCESS:
-      return { loading: false, success: true };
+      return {  success: true,loading: false, };
     case USER_REGISTER_FAIL:
-      return { loading: false, error: action.payload, success: false };
+      return {  error: action.payload, success: false,loading: false, };
       case "RESET":
         return { };
     default:

@@ -2,6 +2,9 @@ const { Promise } = require("mongoose");
 const { resolve } = require("path");
 const validator = require("validator");
 const User = require("../model/User");
+const jwt = require("jsonwebtoken");
+const Refresh = require("../model/Refresh");
+const { reject } = require("lodash");
 
 const emailValidate = (err, req) => {
   console.log("email", req.body.email);
@@ -44,3 +47,23 @@ const userNameValidate = (err, req) => {
     }
   });
 };
+
+exports.validateRefreshToken= async (refreshToken)=>{
+  
+  return new Promise((resolve,reject)=>{
+    const user =  jwt.verify(
+      refreshToken,
+       process.env.REFRESHKEY
+     );
+     resolve(user)
+  })
+    
+    
+  }
+  
+  
+exports.isRefreshTokenAssoWithUser=async(refreshToken,user)=>{
+
+ const isPresent= await Refresh.findOne({token:refreshToken,userId:user.id})
+ return isPresent
+}

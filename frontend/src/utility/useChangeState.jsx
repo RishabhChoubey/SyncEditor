@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
+
 
 function useChangeState(quill,socket,documentId,user,participant) {
-    
+  const navigate = useNavigate();
     useEffect(() => {
         if (quill == null || socket == null) return;
         const handler = (delta, oldDelta, source) => {
+          console.log(delta,source)
           if (source !== "user") return;
           socket.emit("send-changes", delta);
         };
@@ -38,8 +41,9 @@ function useChangeState(quill,socket,documentId,user,participant) {
         socket.on("load-documents", (response) => {
           console.log(document, "datatata");
           if (response.error) {
-            console.log(response.error);
+            
             navigate("/create");
+            alert("Your are not allowed in this doc")
           }
           quill.setContents(response.document);
           quill.enable();

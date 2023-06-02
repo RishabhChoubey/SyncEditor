@@ -97,14 +97,14 @@ exports.signin = (req, res) => {
             httpOnly: true,
             sameSite: "none",
             secure: true,
-            domain: process.env.APP_URL,
+            domain: process.env.DOMAIN,
           });
           res.cookie("accessToken", accessToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30,
             httpOnly: true,
             sameSite: "none",
             secure: true,
-            domain: process.env.APP_URL,
+            domain: process.env.DOMAIN,
           });
           console.log(refreshToken + " refresh " + accessToken);
           try {

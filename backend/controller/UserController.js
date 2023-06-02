@@ -20,8 +20,9 @@ exports.isReady = async (req, res) => {
 
 exports.refresh = async (req, res) => {
   const { refreshToken } = req.cookies;
+  const { accessToken } = req.cookies;
 
-  console.log(refreshToken + "   user 0 ");
+  console.log(refreshToken + "   user 0 " + accessToken);
 
   if (refreshToken == null) {
     console.log("   debugb  ");

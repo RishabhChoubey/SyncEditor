@@ -2,12 +2,11 @@ import React, { useState, useEffect, useHistory, memo } from "react";
 import axios from "axios";
 import "tailwindcss/tailwind.css";
 import "./auth.css";
-import { signin, register ,resetState} from "../action/userAction";
+import { signin, register, resetState } from "../action/userAction";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 const UserAuthenticate = () => {
-
-  console.log("  inside auth")
+  console.log("  inside auth");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   ///////////////////// Selector
@@ -25,10 +24,9 @@ const UserAuthenticate = () => {
   console.log(dataSignIn);
   console.log(dataReg);
 
- 
   ////////////////////////// change form
   const switchToRegister = () => {
-    console.log("register")
+    console.log("register");
     reset();
     setactive(1);
   };
@@ -40,7 +38,7 @@ const UserAuthenticate = () => {
   ///////////////////////// reset fields
 
   const reset = () => {
-    dispatch(resetState())
+    dispatch(resetState());
     setEmail("");
     setuserName("");
     setPassword("");
@@ -68,9 +66,8 @@ const UserAuthenticate = () => {
       setactive(0);
     }
     if (dataSignIn.success) {
-   return   navigate("/create");
+      return navigate("/create");
     }
-   
   }, [dataReg, dataSignIn]);
 
   return (
@@ -103,7 +100,10 @@ const UserAuthenticate = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <div> {dataSignIn?.error?.msg}</div>
-                <button className={"auth_button cursor-pointer"} onClick={loginBtn}>
+                <button
+                  className={"auth_button cursor-pointer"}
+                  onClick={loginBtn}
+                >
                   Signin
                 </button>
               </>
@@ -112,7 +112,10 @@ const UserAuthenticate = () => {
             )}
           </div>
 
-          <div className="signBtn cursor-pointer font-bold" onClick={switchToLogin}>
+          <div
+            className="signBtn cursor-pointer font-bold"
+            onClick={switchToLogin}
+          >
             {" "}
             Signin Form
           </div>
@@ -159,7 +162,10 @@ const UserAuthenticate = () => {
                   value={repeatPassword}
                   onChange={(e) => setRepeatPassword(e.target.value)}
                 />
-                <button className={"auth_button cursor-pointer"} onClick={registerBtn}>
+                <button
+                  className={"auth_button cursor-pointer"}
+                  onClick={registerBtn}
+                >
                   Register
                 </button>
               </>
@@ -167,8 +173,10 @@ const UserAuthenticate = () => {
               <div>loading...</div>
             )}
           </div>
-          <div className="regisBtn cursor-pointer font-bold" onClick={switchToRegister}>
-           
+          <div
+            className="regisBtn cursor-pointer font-bold"
+            onClick={switchToRegister}
+          >
             Registration Form
           </div>
         </div>

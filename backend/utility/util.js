@@ -2,30 +2,31 @@ const jwt = require("jsonwebtoken");
 const Document = require("../model/Document");
 
 const getToken = (user) => {
-  const accessToken=jwt.sign(
+  const accessToken = jwt.sign(
     {
       id: user.id,
       name: user.name,
       email: user.email,
     },
-    process.env.SECRETKEY, {
-      expiresIn: '1m',
-  }
+    process.env.SECRETKEY,
+    {
+      expiresIn: "1m",
+    }
   );
 
-  const refreshToken=jwt.sign(
+  const refreshToken = jwt.sign(
     {
       id: user.id,
       name: user.name,
       email: user.email,
     },
-    process.env.REFRESHKEY, {
-      expiresIn: '1y',
-  }
+    process.env.REFRESHKEY,
+    {
+      expiresIn: "1y",
+    }
   );
 
-
-  return {refreshToken,accessToken}
+  return { refreshToken, accessToken };
 };
 const isAuth = (req, res, next) => {
   const token = req.headers.authorization;
@@ -64,7 +65,6 @@ const isAuthSocket = (token) => {
   }
 };
 
-
 const getUserCreatedDocument = async (documentId) => {
   const document = await Document.findOne({
     _id: documentId,
@@ -97,4 +97,11 @@ const createOrGetDocument = async (documentId, userid, participant) => {
   });
 };
 
-module.exports = { getToken, isAuth, isAuthSocket,isValide,createOrGetDocument,getUserCreatedDocument };
+module.exports = {
+  getToken,
+  isAuth,
+  isAuthSocket,
+  isValide,
+  createOrGetDocument,
+  getUserCreatedDocument,
+};

@@ -19,26 +19,11 @@ import { combineReducers, createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import Cookie from "js-cookie";
 
-
-
-const initialState = {
- 
-};
+const initialState = {};
 
 const reducer = combineReducers({
-  //   postList: postListReducer,
-  //   postDetail: postDetailReducer,
-  //   postDelete: postDeleteReducer,
-  //   postCreate: postCreateReducer,
-  //   postReview: postReviewReducer,
   userRegistration: userResReducer,
   userSignin: userSigReducer,
-  //   removeReview: removeReviewReducer,
-  //   postLike: postLikeReducer,
-  //   postUnlike: postUnlikeReducer,
-  //   userForget: userForgetReducer,
-  //   tokenVerify: tokenVerifyReducer,
-  //   updatePassword: updatePasswordReducer,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

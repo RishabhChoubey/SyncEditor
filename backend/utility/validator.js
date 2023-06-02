@@ -48,22 +48,17 @@ const userNameValidate = (err, req) => {
   });
 };
 
-exports.validateRefreshToken= async (refreshToken)=>{
-  
-  return new Promise((resolve,reject)=>{
-    const user =  jwt.verify(
-      refreshToken,
-       process.env.REFRESHKEY
-     );
-     resolve(user)
-  })
-    
-    
-  }
-  
-  
-exports.isRefreshTokenAssoWithUser=async(refreshToken,user)=>{
+exports.validateRefreshToken = async (refreshToken) => {
+  return new Promise((resolve, reject) => {
+    const user = jwt.verify(refreshToken, process.env.REFRESHKEY);
+    resolve(user);
+  });
+};
 
- const isPresent= await Refresh.findOne({token:refreshToken,userId:user.id})
- return isPresent
-}
+exports.isRefreshTokenAssoWithUser = async (refreshToken, user) => {
+  const isPresent = await Refresh.findOne({
+    token: refreshToken,
+    userId: user.id,
+  });
+  return isPresent;
+};

@@ -20,41 +20,14 @@ import {
   USER_TOKEN_VERIFY_FAIL,
 } from "../constant/userConstant";
 
-// const update = ({ userId, name, email, password }) => async (
-//   dispatch,
-//   getState
-// ) => {
-//   const {
-//     userData: { userInfo },
-//   } = getState();
-//   dispatch({
-//     type: USER_UPDATE_REQUEST,
-//     payload: { userId, name, email, password },
-//   });
-//   try {
-//     const { data } = await Axios.put(
-//       "/api/users/" + userId,
-//       { name, email, password },
-//       {
-//         headers: {
-//           Authorization: "Bearer " + userInfo.token,
-//         },
-//       }
-//     );
-//     dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
-//     Cookie.set("userInfo", JSON.stringify(data));
-//   } catch (error) {
-//     dispatch({ type: USER_UPDATE_FAIL, payload: error.message });
-//   }
-// };
-const api= axios.create({
-  baseURL:import.meta.env.VITE_APP_URL,
+const api = axios.create({
+  baseURL: import.meta.env.VITE_APP_URL,
   withCredentials: true,
   headers: {
-      'Content-type': 'application/json',
-      Accept: 'application/json',
+    "Content-type": "application/json",
+    Accept: "application/json",
   },
-})
+});
 
 const signin = (email, password) => async (dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST });
@@ -69,10 +42,9 @@ const signin = (email, password) => async (dispatch) => {
       dispatch({ type: USER_SIGNIN_FAIL, payload: data.msg });
     } else {
       dispatch({ type: USER_SIGNIN_SUCCESS, payload: data.msg });
-      
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     dispatch({ type: USER_SIGNIN_FAIL, payload: { msg: "Try Again Later" } });
   }
 };
@@ -95,20 +67,19 @@ const register = (name, email, password) => async (dispatch) => {
     dispatch({ type: USER_REGISTER_FAIL, payload: data.msg });
   }
 };
-const getRefresh=()=>async(dispatch)=>{
+const getRefresh = () => async (dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST });
-  const { data }= await api.get("/api/refresh")
+  const { data } = await api.get("/api/refresh");
   if (data.err) {
     dispatch({ type: USER_SIGNIN_FAIL, payload: data.msg });
   } else {
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: data.msg });
-    
   }
-}
+};
 
-const logoutAction = () =>async (dispatch) => {
-  await api.get("/api/logout")
-  console.log("logout")
+const logoutAction = () => async (dispatch) => {
+  await api.get("/api/logout");
+  console.log("logout");
   dispatch({ type: USER_LOGOUT });
 };
 
@@ -165,5 +136,6 @@ export {
   resetForget,
   tokenVerify,
   updatePassword,
-  resetState,getRefresh
+  resetState,
+  getRefresh,
 };

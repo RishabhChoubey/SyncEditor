@@ -7,12 +7,12 @@ const HomePage = () => {
   const [name, setname] = useState("");
   const [url, seturl] = useState("");
   const history = useNavigate();
-   const [error,setError] =useState(false)
+  const [error, setError] = useState(false);
   const create = (e) => {
     if (name.trim() == "") return;
-    if(!useEmail(name)) {
-      setError(state=>state=true)
-      return
+    if (!useEmail(name)) {
+      setError((state) => (state = true));
+      return;
     }
     let firstName = name.split("@")[0] + "-" + uuidv4();
     let lastName = name.split("@")[1];
@@ -32,13 +32,17 @@ const HomePage = () => {
             Enter participant email:
           </label>
           <input
-            onChange={(e) =>{setError(state=>state=false)
-             setname(e.target.value)}}
+            onChange={(e) => {
+              setError((state) => (state = false));
+              setname(e.target.value);
+            }}
             placeholder="Participant email"
-            className={`input md:w-[50%] rounded-2xl ${error? 'text-red-700 bg-red-300':""}`}
+            className={`input md:w-[50%] rounded-2xl ${
+              error ? "text-red-700 bg-red-300" : ""
+            }`}
             type="email"
           />
-          
+
           <button
             className=" w-full md:w-[50%] relative group"
             type="button"

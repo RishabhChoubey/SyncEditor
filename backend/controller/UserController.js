@@ -1,5 +1,10 @@
 const User = require("../model/User");
-const { validateReg, validateSign, validateRefreshToken, isRefreshTokenAssoWithUser } = require("../utility/validator");
+const {
+  validateReg,
+  validateSign,
+  validateRefreshToken,
+  isRefreshTokenAssoWithUser,
+} = require("../utility/validator");
 const bcrypt = require("bcrypt");
 const { isEmpty, get } = require("lodash");
 const { getToken } = require("../utility/util");
@@ -9,72 +14,67 @@ const { user_EMAIL, pass_PASS } = require("../utility/key");
 const Refresh = require("../model/Refresh");
 const jwt = require("jsonwebtoken");
 
+exports.refresh = async (req, res) => {
+  const { refreshToken } = req.cookies;
 
-exports.refresh=async (req,res)=>{
+  console.log(refreshToken + "   user 0 ");
 
-  const {refreshToken} = req.cookies;
-
-  console.log( refreshToken+"   user 0 ")
-
-  if(refreshToken == null){
-    console.log( "   debugb  ")
+  if (refreshToken == null) {
+    console.log("   debugb  ");
     return res.json({
       err: true,
-      msg: null
+      msg: null,
     });
   }
 
-    console.log("   user 1 ..................")
+  console.log("   user 1 ..................");
 
-const user = await validateRefreshToken(refreshToken)
+  const user = await validateRefreshToken(refreshToken);
 
-console.log(user+"   user  ")
+  console.log(user + "   user  ");
 
-if(!user){
- return res.json({
-    err: true,
-    msg: null
-  });
-}
-
-    const isValide= isRefreshTokenAssoWithUser(refreshToken,user)
-
-    if(!isValide){
-      return res.json({
-         err: true,
-         msg: user
-       });
-     }
-
-res.json({
-  err: false,
-  msg: {
-    id: user.id,
-    name: user.name,
-    email: user.email,
+  if (!user) {
+    return res.json({
+      err: true,
+      msg: null,
+    });
   }
-});
-}
 
+  const isValide = isRefreshTokenAssoWithUser(refreshToken, user);
 
-exports.logout=async (req,res)=>{
-  const {refreshToken} = req.cookies;
-  console.log("logout")
-  await Refresh.deleteOne({token:refreshToken})
- 
-  res.clearCookie('refreshToken');
-  res.clearCookie('accessToken');
+  if (!isValide) {
+    return res.json({
+      err: true,
+      msg: user,
+    });
+  }
+
   res.json({
     err: false,
-    msg:null
+    msg: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    },
   });
-  }
+};
 
+exports.logout = async (req, res) => {
+  const { refreshToken } = req.cookies;
+  console.log("logout");
+  await Refresh.deleteOne({ token: refreshToken });
 
+  res.clearCookie("refreshToken");
+  res.clearCookie("accessToken");
+  res.json({
+    err: false,
+    msg: null,
+  });
+};
 
 exports.signin = (req, res) => {
   let err = {};
-  
+
   validateSign(err, req).then((err) => {
     if (!isEmpty(err)) {
       res.json({ err: true, msg: err });
@@ -82,31 +82,31 @@ exports.signin = (req, res) => {
       User.findOne({
         email: req.body.email,
       }).then(async (user) => {
-        console.log(user +"  user")
+        console.log(user + "  user");
         const log = await bcrypt.compare(req.body.password, user.password);
-console.log(log+"   log")
+        console.log(log + "   log");
         if (log) {
-          const {refreshToken,accessToken}= getToken(user)
-          res.cookie('refreshToken',refreshToken, {
+          const { refreshToken, accessToken } = getToken(user);
+          res.cookie("refreshToken", refreshToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30,
             httpOnly: true,
-        });
-          res.cookie('accessToken',accessToken, {
+          });
+          res.cookie("accessToken", accessToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30,
             httpOnly: true,
-        });
-        console.log(refreshToken+" refresh "+accessToken)
-        try{
-
-       const tk=  await Refresh.create({
-         token: refreshToken , userId: user.id
-      });
-    console.log(tk)}
-      catch(e){
-        console.log(e+"   try agaib")
-        err["msg"] = "Error try again later";
-     return   res.json({ err: true, msg: err });
-      }
+          });
+          console.log(refreshToken + " refresh " + accessToken);
+          try {
+            const tk = await Refresh.create({
+              token: refreshToken,
+              userId: user.id,
+            });
+            console.log(tk);
+          } catch (e) {
+            console.log(e + "   try agaib");
+            err["msg"] = "Error try again later";
+            return res.json({ err: true, msg: err });
+          }
           res.json({
             err: false,
             msg: {

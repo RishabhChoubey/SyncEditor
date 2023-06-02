@@ -4,7 +4,7 @@ import "quill/dist/quill.snow.css";
 import socketio from "socket.io-client";
 
 import "./TextEditor.css";
-import copy from "../assets/link.png"
+import copy from "../assets/link.png";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import Cookie from "js-cookie";
 import { useSelector } from "react-redux";
@@ -12,11 +12,8 @@ import useEditor from "../utility/useEditor";
 import useSocket from "../utility/useSocket";
 import useChangeState from "../utility/useChangeState";
 
-
-
 const TextEditor = (props) => {
-
- const navigate = useNavigate()
+  const navigate = useNavigate();
   const url = window.location;
   console.log(url.href);
   const [searchParams] = useSearchParams();
@@ -35,24 +32,25 @@ const TextEditor = (props) => {
   if (user == null || participant == null) navigate("/");
 
   const handleCopy = () => {
-    if(!navigator.clipboard) return
+    if (!navigator.clipboard) return;
 
     navigator.clipboard.writeText(url.href);
-    alert(`URL Copied :  ${url.href}`)
+    alert(`URL Copied :  ${url.href}`);
   };
 
-const wrapperRef= useEditor(setquill);
+  const wrapperRef = useEditor(setquill);
 
- useSocket(setsocket)
+  useSocket(setsocket);
 
- useChangeState(quill,socket,documentId,user,participant)
-
+  useChangeState(quill, socket, documentId, user, participant);
 
   return (
     <>
-      <div className="absolute left-[.25rem] top-[3rem] z-[10] h-5 w-5" onClick={handleCopy}>
-  
-       <img src={copy} alt="copy" className="h-full w-full active:scale-110"/>
+      <div
+        className="absolute left-[.25rem] top-[3rem] z-[10] h-5 w-5"
+        onClick={handleCopy}
+      >
+        <img src={copy} alt="copy" className="h-full w-full active:scale-110" />
       </div>
       <div
         className="w-[100%] h-[100%] bg-red-800 flex flex-col justify-center items-center relative p-3"

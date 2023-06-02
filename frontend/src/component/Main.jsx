@@ -6,12 +6,7 @@ import { logoutAction } from "../action/userAction";
 const Main = () => {
   const dispatch = useDispatch();
   const naviagte = useNavigate();
-  const { userInfo,loading } = useSelector((state) => state.userSignin);
-
-  
- 
-
-
+  const { userInfo, loading } = useSelector((state) => state.userSignin);
 
   const logout = () => {
     dispatch(logoutAction());
@@ -29,9 +24,11 @@ const Main = () => {
               {userInfo?.name.toUpperCase()}
             </div>
           )}
-         {userInfo && (   <div className="text-white cursor-pointer" onClick={logout}>
-            Logout 
-          </div>)}
+          {userInfo && (
+            <div className="text-white cursor-pointer" onClick={logout}>
+              Logout
+            </div>
+          )}
         </div>
       </div>
       <Outlet />

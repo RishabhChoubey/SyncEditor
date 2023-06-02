@@ -21,33 +21,32 @@ import Cookie from "js-cookie";
 function userSigReducer(state = {}, action) {
   switch (action.type) {
     case USER_SIGNIN_REQUEST:
-      return { ...state,loading: true, success: false };
+      return { ...state, loading: true, success: false };
     case USER_SIGNIN_SUCCESS:
-      return {  userInfo: action.payload, success: true,loading: false, };
+      return { userInfo: action.payload, success: true, loading: false };
     case USER_SIGNIN_FAIL:
-      return {  error: action.payload, success: false,loading: false, };
+      return { error: action.payload, success: false, loading: false };
     case USER_LOGOUT:
-      return {...state,userInfo:null,success:false};
+      return { ...state, userInfo: null, success: false };
     case "UNSUCCESS":
-      return { userInfo: null,loading:false };
-      case "RESET":
-        return { userInfo: null,loading:false };
+      return { userInfo: null, loading: false };
+    case "RESET":
+      return { userInfo: null, loading: false };
 
     default:
       return state;
   }
 }
 function userResReducer(state = {}, action) {
-
   switch (action.type) {
     case USER_REGISTER_REQUEST:
       return { loading: true, success: false };
     case USER_REGISTER_SUCCESS:
-      return {  success: true,loading: false, };
+      return { success: true, loading: false };
     case USER_REGISTER_FAIL:
-      return {  error: action.payload, success: false,loading: false, };
-      case "RESET":
-        return { };
+      return { error: action.payload, success: false, loading: false };
+    case "RESET":
+      return {};
     default:
       return state;
   }

@@ -95,16 +95,14 @@ exports.signin = (req, res) => {
           res.cookie("refreshToken", refreshToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30,
             httpOnly: true,
-            sameSite: "none",
+            sameSite: none,
             secure: true,
-            domain: process.env.DOMAIN,
           });
           res.cookie("accessToken", accessToken, {
             maxAge: 1000 * 60 * 60 * 24 * 30,
             httpOnly: true,
-            sameSite: "none",
+            sameSite: none,
             secure: true,
-            domain: process.env.DOMAIN,
           });
           console.log(refreshToken + " refresh " + accessToken);
           try {

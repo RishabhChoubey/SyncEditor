@@ -103,8 +103,8 @@ const UserAuthenticate = () => {
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <div> {dataSignIn?.error?.msg}</div>
-                <button className={"auth_button"} onClick={loginBtn}>
-                  signin
+                <button className={"auth_button cursor-pointer"} onClick={loginBtn}>
+                  Signin
                 </button>
               </>
             ) : (
@@ -112,9 +112,9 @@ const UserAuthenticate = () => {
             )}
           </div>
 
-          <div className="signBtn " onClick={switchToLogin}>
+          <div className="signBtn cursor-pointer font-bold" onClick={switchToLogin}>
             {" "}
-            signin form
+            Signin Form
           </div>
         </div>
         <div className=" relative register h-[calc(50%-.25rem)] w-[100%] lg:w-[50%]  lg:h-[100%]  justify-center items-center flex flex-col ">
@@ -159,7 +159,7 @@ const UserAuthenticate = () => {
                   value={repeatPassword}
                   onChange={(e) => setRepeatPassword(e.target.value)}
                 />
-                <button className={"auth_button"} onClick={registerBtn}>
+                <button className={"auth_button cursor-pointer"} onClick={registerBtn}>
                   Register
                 </button>
               </>
@@ -167,9 +167,9 @@ const UserAuthenticate = () => {
               <div>loading...</div>
             )}
           </div>
-          <div className="regisBtn " onClick={switchToRegister}>
+          <div className="regisBtn cursor-pointer font-bold" onClick={switchToRegister}>
            
-            register form
+            Registration Form
           </div>
         </div>
       </span>

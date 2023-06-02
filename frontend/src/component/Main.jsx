@@ -29,9 +29,9 @@ const Main = () => {
               {userInfo?.name.toUpperCase()}
             </div>
           )}
-          <div className="text-white cursor-pointer" onClick={logout}>
-            Logout
-          </div>
+         {userInfo && (   <div className="text-white cursor-pointer" onClick={logout}>
+            Logout 
+          </div>)}
         </div>
       </div>
       <Outlet />

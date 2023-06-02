@@ -14,6 +14,7 @@ import Documents from "./component/Documents";
 import { useDispatch, useSelector } from "react-redux";
 import Main from "./component/Main";
 import axios from "axios";
+import ProtectedRoute from "./component/ProtectedRoute";
 function App() {
  const dispatch=useDispatch();
  const { userInfo,loading } = useSelector((state) => state.userSignin);
@@ -31,12 +32,16 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />}>
           <Route index element={<User />}></Route>
+          <Route element={<ProtectedRoute/>}>
           <Route path="/doc" element={<Documents />}></Route>
           <Route path="/create" element={<HomePage />}></Route>
           <Route
             path="/document/:id"
             element={<TextEditor></TextEditor>}
           ></Route>
+
+          </Route>
+          
         </Route>
       </Routes>
     </BrowserRouter>

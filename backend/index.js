@@ -9,18 +9,25 @@ const bodyParser = require("body-parser");
 const http = require("http");
 const user = require("./route/UserRoute");
 const socket = require("socket.io");
-const { isAuth, isAuthSocket, createOrGetDocument, isValide, getUserCreatedDocument } = require("./utility/util");
+const {
+  isAuth,
+  isAuthSocket,
+  createOrGetDocument,
+  isValide,
+  getUserCreatedDocument,
+} = require("./utility/util");
 const { useSocket } = require("./utility/useSocket");
-const cookieParser = require('cookie-parser');
+const cookieParser = require("cookie-parser");
 const server = http.createServer(app);
 
-
 app.use(cookieParser());
-app.use(cors({
-  origin:process.env.APP_URL,
-  methods: ['GET', 'POST'],
-  credentials: true,
-},));
+app.use(
+  cors({
+    origin: process.env.APP_URL,
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api", user);
@@ -30,7 +37,6 @@ try {
   mongoose.connect(MONGOURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-
   });
 
   console.log("conected....to mongoose");
@@ -48,7 +54,7 @@ app.get("/docInvite/", isAuth, async (req, res) => {
   res.json({ data: dat });
 });
 
-useSocket(io)
+useSocket(io);
 
 server.listen(4000, () => {
   console.log("connected to server");

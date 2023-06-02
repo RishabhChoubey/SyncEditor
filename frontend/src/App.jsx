@@ -15,29 +15,16 @@ import { useDispatch, useSelector } from "react-redux";
 import Main from "./component/Main";
 import axios from "axios";
 import ProtectedRoute from "./component/ProtectedRoute";
+import Loading from "./component/Loading";
 function App() {
-  const dispatch = useDispatch();
-  const { userInfo, loading } = useSelector((state) => state.userSignin);
-
-  useEffect(() => {
-    dispatch(getRefresh());
-  }, []);
-
-  if (loading)
-    return (
-      <div className="bold justify-center items-center bg-slate-600 h-screen w-screen">
-        Loading...
-      </div>
-    );
-
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main />}>
-          <Route index element={<User />}></Route>
+          <Route path="/auth" element={<User />}></Route>
           <Route element={<ProtectedRoute />}>
             <Route path="/doc" element={<Documents />}></Route>
-            <Route path="/create" element={<HomePage />}></Route>
+            <Route index element={<HomePage />}></Route>
             <Route
               path="/document/:id"
               element={<TextEditor></TextEditor>}

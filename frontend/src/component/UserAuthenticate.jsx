@@ -5,6 +5,7 @@ import "./auth.css";
 import { signin, register, resetState } from "../action/userAction";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Loading from "./Loading";
 const UserAuthenticate = () => {
   console.log("  inside auth");
   const dispatch = useDispatch();
@@ -66,9 +67,11 @@ const UserAuthenticate = () => {
       setactive(0);
     }
     if (dataSignIn.success) {
-      return navigate("/create");
+      return navigate("/");
     }
   }, [dataReg, dataSignIn]);
+
+  if (dataSignIn && dataSignIn.loading) <Loading />;
 
   return (
     <div className="main w-[100%] h-[calc(100vh-2.5rem)]  flex flex-col justify-center items-center">

@@ -29,7 +29,7 @@ const TextEditor = (props) => {
   const createdFor = { id: documentId.split("-")[0] + "@" + last };
   const participant = user?.id == createdFor?.id ? user?.id : createdFor?.id;
 
-  if (user == null || participant == null) navigate("/");
+  if (user == null || participant == null) navigate("/auth");
 
   const handleCopy = () => {
     if (!navigator.clipboard) return;

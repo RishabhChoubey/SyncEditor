@@ -5,9 +5,14 @@ import { Navigate, Outlet } from "react-router-dom";
 const ProtectedRoute = (Component) => {
   const { userInfo, loading } = useSelector((state) => state.userSignin);
 
-  if (userInfo == null || userInfo == undefined) {
-    return <Navigate to="/" />;
+  if (
+    (loading == false || loading != undefined) &&
+    (userInfo == null || userInfo == undefined)
+  ) {
+    console.log(!loading + "   protected redirect " + userInfo);
+    return <Navigate to="/auth" />;
   }
+
   return <Outlet />;
 };
 

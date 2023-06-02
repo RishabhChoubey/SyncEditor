@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useRef } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import TextEditor from "./component/TextEditor";
 import {
   Route,
@@ -7,7 +7,7 @@ import {
   useNavigate,
   Link,
 } from "react-router-dom";
-import { logoutAction, getRefresh } from "./action/userAction";
+import { logoutAction, getRefresh, api } from "./action/userAction";
 import HomePage from "./component/HomePage";
 import User from "./component/UserAuthenticate";
 import Documents from "./component/Documents";
@@ -17,6 +17,21 @@ import axios from "axios";
 import ProtectedRoute from "./component/ProtectedRoute";
 import Loading from "./component/Loading";
 function App() {
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    async function checkBackend() {
+      const {
+        data: { data },
+      } = await api.get("/api/isready");
+      console.log(JSON.stringify(data) + " server rews");
+      if (data == true) setLoading(false);
+    }
+    checkBackend();
+  }, []);
+
+  if (loading) return <Loading message="Getting Backend Read..."></Loading>;
+
   return (
     <BrowserRouter>
       <Routes>

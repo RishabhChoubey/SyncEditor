@@ -1,9 +1,9 @@
 import "./Loading.css";
 
-const Loading = () => {
+const Loading = ({ message }) => {
   return (
     <div className="flex justify-center items-center z-10 h-screen 2-screen ">
-      <div className="flex relative">
+      <div className="flex relative flex-col justify-center items-center">
         <svg className="pl" width="240" height="240" viewBox="0 0 240 240">
           <circle
             className="pl__ring pl__ring--a"
@@ -52,6 +52,7 @@ const Loading = () => {
             strokeLinecap="round"
           ></circle>
         </svg>
+        <div>{message}</div>
       </div>
     </div>
   );

@@ -14,6 +14,10 @@ const { user_EMAIL, pass_PASS } = require("../utility/key");
 const Refresh = require("../model/Refresh");
 const jwt = require("jsonwebtoken");
 
+exports.isReady = async (req, res) => {
+  res.status(200).json({ data: true });
+};
+
 exports.refresh = async (req, res) => {
   const { refreshToken } = req.cookies;
 

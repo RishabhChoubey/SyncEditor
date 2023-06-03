@@ -90,7 +90,7 @@ const UserAuthenticate = () => {
                 <input
                   type="text"
                   placeholder="email"
-                  className="input"
+                  className="input  rounded-md"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -98,13 +98,13 @@ const UserAuthenticate = () => {
                 <input
                   type="password"
                   placeholder="password"
-                  className="input"
+                  className="input rounded-md"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <div> {dataSignIn?.error?.msg}</div>
                 <button
-                  className={"auth_button cursor-pointer"}
+                  className={"auth_button cursor-pointer rounded-xl"}
                   onClick={loginBtn}
                 >
                   Signin
@@ -137,7 +137,7 @@ const UserAuthenticate = () => {
                 <input
                   type="text"
                   placeholder="username"
-                  className="input"
+                  className="input  rounded-md"
                   onChange={(e) => setuserName(e.target.value)}
                   value={userName}
                 />
@@ -145,7 +145,7 @@ const UserAuthenticate = () => {
                 <input
                   type="text"
                   placeholder="email"
-                  className="input"
+                  className="input  rounded-md"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -153,7 +153,7 @@ const UserAuthenticate = () => {
                 <input
                   type="password"
                   placeholder="password"
-                  className="input"
+                  className="input  rounded-md"
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
                 />
@@ -161,12 +161,12 @@ const UserAuthenticate = () => {
                 <input
                   type="password"
                   placeholder="re-enter password"
-                  className="input"
+                  className="input  rounded-md"
                   value={repeatPassword}
                   onChange={(e) => setRepeatPassword(e.target.value)}
                 />
                 <button
-                  className={"auth_button cursor-pointer"}
+                  className={"auth_button cursor-pointer rounded-xl"}
                   onClick={registerBtn}
                 >
                   Register

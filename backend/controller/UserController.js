@@ -36,7 +36,7 @@ exports.refresh = async (req, res) => {
 
   const user = await validateRefreshToken(refreshToken);
 
-  console.log(user + "   user  ");
+  console.log(JSON.stringify(user) + "   user  ");
 
   if (!user) {
     return res.json({

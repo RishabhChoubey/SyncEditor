@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import useEditor from "../utility/useEditor";
 import useSocket from "../utility/useSocket";
 import useChangeState from "../utility/useChangeState";
+import Loading from "./Loading";
 
 const TextEditor = (props) => {
   const navigate = useNavigate();
@@ -23,13 +24,39 @@ const TextEditor = (props) => {
   const [socket, setsocket] = useState();
 
   const [quill, setquill] = useState();
+  let intervalTime;
+  const onFocus = (e) => {
+    if (document.visibilityState == "hidden") {
+      intervalTime = setInterval(() => {
+        console.log("refresh....");
+        window.location.reload();
+      }, 60000);
+      console.log(intervalTime);
+    }
+    if (document.visibilityState == "visible") {
+      clearInterval(intervalTime);
+    }
+  };
 
-  const { userInfo } = useSelector((state) => state.userSignin);
+  useEffect(() => {
+    document.addEventListener("visibilitychange", onFocus);
+
+    return () => {
+      document.removeEventListener("visibilitychange", onFocus);
+    };
+  }, []);
+
+  const { userInfo, loading } = useSelector((state) => state.userSignin);
   const user = userInfo;
   const createdFor = { id: documentId.split("-")[0] + "@" + last };
   const participant = user?.id == createdFor?.id ? user?.id : createdFor?.id;
-
-  if (user == null || participant == null) navigate("/auth");
+  useEffect(() => {
+    if (
+      (loading == false || loading != undefined) &&
+      (user == null || participant == null)
+    )
+      navigate("/auth");
+  }, [user]);
 
   const handleCopy = () => {
     if (!navigator.clipboard) return;
@@ -50,7 +77,11 @@ const TextEditor = (props) => {
         className="absolute left-[.25rem] top-[3rem] z-[10] h-5 w-5"
         onClick={handleCopy}
       >
-        <img src={copy} alt="copy" className="h-full w-full active:scale-110" />
+        <img
+          src={copy}
+          alt="copy"
+          className="h-full w-full active:scale-110 cursor-pointer"
+        />
       </div>
       <div
         className="w-[100%] h-[100%] bg-red-800 flex flex-col justify-center items-center relative p-3"

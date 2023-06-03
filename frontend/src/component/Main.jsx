@@ -26,7 +26,7 @@ const Main = () => {
         </Link>
         <div className=" flex flex-row gap-5">
           {userInfo && (
-            <div className="text-white rounded-xl p-1 bg-slate-400 h-fit hover:bg-slate-600">
+            <div className="text-white rounded-xl p-1 bg-slate-400 h-fit hover:bg-slate-600 cursor-pointer ">
               {userInfo?.name.toUpperCase()}
             </div>
           )}

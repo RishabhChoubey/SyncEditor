@@ -34,9 +34,7 @@
 .button:hover .front {
   transform: translateY(-2px);
 }
-/* .button:hover .shadow {
-  transform: translateY(0px);
-} */
+
 .url {
   height: auto;
   width: 100%;

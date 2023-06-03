@@ -73,8 +73,8 @@ exports.logout = async (req, res) => {
 
   console.log(del);
 
-  res.clearCookie("refreshToken");
-  res.clearCookie("accessToken");
+  res.clearCookie("refreshToken", { sameSite: "none", secure: true });
+  res.clearCookie("accessToken", { sameSite: "none", secure: true });
 
   res.json({
     err: false,

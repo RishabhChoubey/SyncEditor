@@ -45,7 +45,8 @@ exports.refresh = async (req, res) => {
     });
   }
 
-  const isValide = isRefreshTokenAssoWithUser(refreshToken, user);
+  const isValide = await isRefreshTokenAssoWithUser(refreshToken, user);
+  console.log(JSON.stringify(isValide) + "  is valide");
 
   if (!isValide) {
     return res.json({

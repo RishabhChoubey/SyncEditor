@@ -60,5 +60,6 @@ exports.isRefreshTokenAssoWithUser = async (refreshToken, user) => {
     token: refreshToken,
     userId: user.id,
   });
+  console.log(JSON.stringify(isPresent) + "  is valide");
   return isPresent;
 };

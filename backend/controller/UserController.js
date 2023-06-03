@@ -51,7 +51,7 @@ exports.refresh = async (req, res) => {
   if (!isValide) {
     return res.json({
       err: true,
-      msg: user,
+      msg: "",
     });
   }
 

@@ -66,7 +66,8 @@ exports.refresh = async (req, res) => {
 
 exports.logout = async (req, res) => {
   const { refreshToken } = req.cookies;
-  console.log("logout");
+
+  console.log("logout " + refreshToken);
   const del = await Refresh.deleteOne({ token: refreshToken });
 
   console.log(del);

@@ -15,6 +15,8 @@ import {
   USER_TOKEN_VERIFY_REQUEST,
   USER_TOKEN_VERIFY_SUCCESS,
   USER_TOKEN_VERIFY_FAIL,
+  UNSUCCESS,
+  RESET,
 } from "../constant/userConstant";
 import Cookie from "js-cookie";
 
@@ -28,9 +30,9 @@ function userSigReducer(state = {}, action) {
       return { error: action.payload, success: false, loading: false };
     case USER_LOGOUT:
       return { ...state, userInfo: null, success: false };
-    case "UNSUCCESS":
+    case UNSUCCESS:
       return { userInfo: null, loading: false };
-    case "RESET":
+    case RESET:
       return { userInfo: null, loading: false };
 
     default:
@@ -45,68 +47,63 @@ function userResReducer(state = {}, action) {
       return { success: true, loading: false };
     case USER_REGISTER_FAIL:
       return { error: action.payload, success: false, loading: false };
-    case "RESET":
+    case RESET:
       return {};
     default:
       return state;
   }
 }
-const userForgetReducer = (state = {}, action) => {
-  switch (action.type) {
-    case USER_FORGET_REQUEST:
-      return { loading: true, success: false };
-    case USER_FORGET_SUCCESS:
-      return { loading: false, data: "Email send to Email id", success: true };
-    case USER_FORGET_FAIL:
-      return { loading: false, error: "Invalide Email Id", success: false };
-    case "RESET_FORGET":
-      return {};
-    default:
-      return state;
-  }
-};
-const tokenVerifyReducer = (state = {}, action) => {
-  switch (action.type) {
-    case USER_TOKEN_VERIFY_REQUEST:
-      return { loading: true, success: false };
-    case USER_TOKEN_VERIFY_SUCCESS:
-      return { loading: false, data: " success ", success: true };
-    case USER_TOKEN_VERIFY_FAIL:
-      return {
-        loading: false,
-        error: "Try again forget password token expire ",
-        success: false,
-      };
-    case "RESET_TOKEN":
-      return {};
-    default:
-      return state;
-  }
-};
 
-const updatePasswordReducer = (state = {}, action) => {
-  switch (action.type) {
-    case USER_UPDATE_REQUEST:
-      return { loading: true, success: false };
-    case USER_UPDATE_SUCCESS:
-      return { loading: false, data: " success ", success: true };
-    case USER_UPDATE_FAIL:
-      return {
-        loading: false,
-        error: " error updating ",
-        success: false,
-      };
-    case "RESET_TOKEN":
-      return {};
-    default:
-      return state;
-  }
-};
+// const userForgetReducer = (state = {}, action) => {
+//   switch (action.type) {
+//     case USER_FORGET_REQUEST:
+//       return { loading: true, success: false };
+//     case USER_FORGET_SUCCESS:
+//       return { loading: false, data: "Email send to Email id", success: true };
+//     case USER_FORGET_FAIL:
+//       return { loading: false, error: "Invalide Email Id", success: false };
+//     case "RESET_FORGET":
+//       return {};
+//     default:
+//       return state;
+//   }
+// };
+// const tokenVerifyReducer = (state = {}, action) => {
+//   switch (action.type) {
+//     case USER_TOKEN_VERIFY_REQUEST:
+//       return { loading: true, success: false };
+//     case USER_TOKEN_VERIFY_SUCCESS:
+//       return { loading: false, data: " success ", success: true };
+//     case USER_TOKEN_VERIFY_FAIL:
+//       return {
+//         loading: false,
+//         error: "Try again forget password token expire ",
+//         success: false,
+//       };
+//     case "RESET_TOKEN":
+//       return {};
+//     default:
+//       return state;
+//   }
+// };
 
-export {
-  userResReducer,
-  userSigReducer,
-  userForgetReducer,
-  tokenVerifyReducer,
-  updatePasswordReducer,
-};
+// const updatePasswordReducer = (state = {}, action) => {
+//   switch (action.type) {
+//     case USER_UPDATE_REQUEST:
+//       return { loading: true, success: false };
+//     case USER_UPDATE_SUCCESS:
+//       return { loading: false, data: " success ", success: true };
+//     case USER_UPDATE_FAIL:
+//       return {
+//         loading: false,
+//         error: " error updating ",
+//         success: false,
+//       };
+//     case "RESET_TOKEN":
+//       return {};
+//     default:
+//       return state;
+//   }
+// };
+
+export { userResReducer, userSigReducer };

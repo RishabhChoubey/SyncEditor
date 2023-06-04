@@ -7,20 +7,20 @@ const Refresh = require("../model/Refresh");
 const { reject } = require("lodash");
 
 const emailValidate = (err, req) => {
-  console.log("email", req.body.email);
   if (!validator.isEmail(req.body.email)) {
-    err["email"] = "use valid email";
+    err["email"] = "use valide email";
   }
 };
 
 exports.validateReg = async (err, req) => {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     emailValidate(err, req);
-    userNameValidate(err, req);
+    await userNameValidate(err, req);
     return User.findOne({ email: req.body.email }).then((res) => {
       if (res) {
         err["email"] = "user with email exist";
       }
+      console.log(err);
       resolve(err);
     });
   });
@@ -28,7 +28,6 @@ exports.validateReg = async (err, req) => {
 
 exports.validateSign = async (err, req) => {
   return new Promise((resolve, reject) => {
-    console.log(req.body);
     emailValidate(err, req);
 
     return User.findOne({ email: req.body.email }).then((res) => {
@@ -40,12 +39,9 @@ exports.validateSign = async (err, req) => {
   });
 };
 
-const userNameValidate = (err, req) => {
-  User.findOne({ name: req.body.name }).then((res) => {
-    if (res) {
-      err["user"] = "username already exit ";
-    }
-  });
+const userNameValidate = async (err, req) => {
+  const user = await User.findOne({ name: req.body.name });
+  if (user) err["user"] = "username already exit";
 };
 
 exports.validateRefreshToken = async (refreshToken) => {
@@ -60,6 +56,6 @@ exports.isRefreshTokenAssoWithUser = async (refreshToken, user) => {
     token: refreshToken,
     userId: user.id,
   });
-  console.log(JSON.stringify(isPresent) + "  is valide");
+
   return isPresent;
 };

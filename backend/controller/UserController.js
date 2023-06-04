@@ -22,21 +22,14 @@ exports.refresh = async (req, res) => {
   const { refreshToken } = req.cookies;
   const { accessToken } = req.cookies;
 
-  console.log(refreshToken + "   user 0 " + accessToken);
-
   if (refreshToken == null) {
-    console.log("   debugb  ");
     return res.json({
       err: true,
       msg: null,
     });
   }
 
-  console.log("   user 1 ..................");
-
   const user = await validateRefreshToken(refreshToken);
-
-  console.log(JSON.stringify(user) + "   user  ");
 
   if (!user) {
     return res.json({
@@ -46,7 +39,6 @@ exports.refresh = async (req, res) => {
   }
 
   const isValide = await isRefreshTokenAssoWithUser(refreshToken, user);
-  console.log(JSON.stringify(isValide) + "  is valide");
 
   if (!isValide) {
     return res.json({
@@ -68,10 +60,7 @@ exports.refresh = async (req, res) => {
 exports.logout = async (req, res) => {
   const { refreshToken } = req.cookies;
 
-  console.log("logout " + refreshToken);
   const del = await Refresh.deleteOne({ token: refreshToken });
-
-  console.log(del);
 
   res.clearCookie("refreshToken", { sameSite: "none", secure: true });
   res.clearCookie("accessToken", { sameSite: "none", secure: true });
@@ -92,9 +81,8 @@ exports.signin = (req, res) => {
       User.findOne({
         email: req.body.email,
       }).then(async (user) => {
-        console.log(user + "  user");
         const log = await bcrypt.compare(req.body.password, user.password);
-        console.log(log + "   log");
+
         if (log) {
           const { refreshToken, accessToken } = getToken(user);
           res.cookie("refreshToken", refreshToken, {
@@ -109,15 +97,13 @@ exports.signin = (req, res) => {
             sameSite: "none",
             secure: true,
           });
-          console.log(refreshToken + " refresh " + accessToken);
+
           try {
             const tk = await Refresh.create({
               token: refreshToken,
               userId: user.id,
             });
-            console.log(tk);
           } catch (e) {
-            console.log(e + "   try agaib");
             err["msg"] = "Error try again later";
             return res.json({ err: true, msg: err });
           }
@@ -141,7 +127,6 @@ exports.check = (req, res) => {
   res.json({ msg: "dhddjdj" });
 };
 exports.register = async (req, res) => {
-  console.log(req.body, "userrr");
   let err = {};
   const salt = await bcrypt.genSalt(10);
   const newpass = await bcrypt.hash(req.body.password, salt);
@@ -178,12 +163,9 @@ exports.register = async (req, res) => {
 
 exports.forget = async (req, res) => {
   User.findOne({ email: req.body.email }).then(async (user) => {
-    console.log(user, "forget.............. in err");
     if (!user) {
       res.json({ err: true, msg: "invalide email" });
     } else {
-      console.log(user, "forget..............in no err");
-
       const token = crypto.randomBytes(20).toString("hex");
 
       user.update({
@@ -198,17 +180,16 @@ exports.forget = async (req, res) => {
           pass: pass_PASS,
         },
       });
-      console.log("gamil after.........................");
+
       const mailOption = {
         from: user_EMAIL,
         to: `${req.body.email}`,
         subject: "Passward reset link",
         text: `Link\n\n` + `http://localhost:3000/reset/${token}`,
       };
-      console.log("send mail.........................");
+
       transporter.sendMail(mailOption, (err, response) => {
         if (err) {
-          console.log("send mail error.........................", err);
           res.json({ err: true, msg: "Try later" });
         } else {
           res.json({ err: false, msg: "mail send" });
@@ -224,7 +205,5 @@ exports.verifyToken = async (req, res) => {
     resetDate: {
       $gt: Date.now(),
     },
-  }).then((user) => {
-    console.log(user, "verify.............");
-  });
+  }).then((user) => {});
 };

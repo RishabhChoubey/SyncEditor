@@ -1,23 +1,7 @@
-import {
-  userResReducer,
-  userSigReducer,
-  userForgetReducer,
-  tokenVerifyReducer,
-  updatePasswordReducer,
-} from "./reducer/userReducer";
-// import {
-//   postListReducer,
-//   postCreateReducer,
-//   postDeleteReducer,
-//   postDetailReducer,
-//   postReviewReducer,
-//   removeReviewReducer,
-//   postLikeReducer,
-//   postUnlikeReducer,
-// } from "./reducer/postReducer";
+import { userResReducer, userSigReducer } from "./reducer/userReducer";
+
 import { combineReducers, createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
-import Cookie from "js-cookie";
 
 const initialState = {};
 

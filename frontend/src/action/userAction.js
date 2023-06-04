@@ -18,6 +18,8 @@ import {
   USER_TOKEN_VERIFY_REQUEST,
   USER_TOKEN_VERIFY_SUCCESS,
   USER_TOKEN_VERIFY_FAIL,
+  UNSUCCESS,
+  RESET,
 } from "../constant/userConstant";
 
 const api = axios.create({
@@ -31,20 +33,19 @@ const api = axios.create({
 
 const signin = (email, password) => async (dispatch) => {
   dispatch({ type: USER_SIGNIN_REQUEST });
-  console.log(email, password);
+
   try {
     const { data } = await api.post(`/api/signin`, {
       email,
       password,
     });
-    console.log(data.msg.password, "datatatat");
+
     if (data.err) {
       dispatch({ type: USER_SIGNIN_FAIL, payload: data.msg });
     } else {
       dispatch({ type: USER_SIGNIN_SUCCESS, payload: data.msg });
     }
   } catch (error) {
-    console.log(error);
     dispatch({ type: USER_SIGNIN_FAIL, payload: { msg: "Try Again Later" } });
   }
 };
@@ -57,7 +58,7 @@ const register = (name, email, password) => async (dispatch) => {
       email,
       password,
     });
-    console.log("regsss", data);
+
     if (data.err) {
       dispatch({ type: USER_REGISTER_FAIL, payload: data.msg });
     } else {
@@ -79,16 +80,16 @@ const getRefresh = () => async (dispatch) => {
 
 const logoutAction = () => async (dispatch) => {
   await api.get("/api/logout");
-  console.log("logout");
+
   dispatch({ type: USER_LOGOUT });
 };
 
 const unsuccess = () => (dispatch) => {
-  dispatch({ type: "UNSUCCESS" });
+  dispatch({ type: UNSUCCESS });
 };
 
 const resetState = () => (dispatch) => {
-  dispatch({ type: "RESET" });
+  dispatch({ type: RESET });
 };
 
 const resetPass = (email) => async (dispatch) => {
@@ -102,30 +103,32 @@ const resetPass = (email) => async (dispatch) => {
     dispatch({ type: USER_FORGET_SUCCESS });
   }
 };
-const resetForget = () => async (dispatch) => {
-  dispatch({ type: "RESET_FORGET" });
-};
 
-const tokenVerify = (token) => async (dispatch) => {
-  dispatch({ type: USER_TOKEN_VERIFY_REQUEST });
-  const { data } = await axios.get("/api/users/verify/" + token);
-  if (data.err) {
-    dispatch({ type: USER_TOKEN_VERIFY_FAIL });
-  } else {
-    dispatch({ type: USER_TOKEN_VERIFY_SUCCESS });
-  }
-};
-const updatePassword = (pass) => async (dispatch) => {
-  dispatch({ type: USER_UPDATE_REQUEST });
-  const { data } = await axios.put("/api/users/updatePass", {
-    pass,
-  });
-  if (data.err) {
-    dispatch({ type: USER_UPDATE_FAIL });
-  } else {
-    dispatch({ type: USER_UPDATE_SUCCESS });
-  }
-};
+// const resetForget = () => async (dispatch) => {
+//   dispatch({ type: "RESET_FORGET" });
+// };
+
+// const tokenVerify = (token) => async (dispatch) => {
+//   dispatch({ type: USER_TOKEN_VERIFY_REQUEST });
+//   const { data } = await axios.get("/api/users/verify/" + token);
+//   if (data.err) {
+//     dispatch({ type: USER_TOKEN_VERIFY_FAIL });
+//   } else {
+//     dispatch({ type: USER_TOKEN_VERIFY_SUCCESS });
+//   }
+// };
+
+// const updatePassword = (pass) => async (dispatch) => {
+//   dispatch({ type: USER_UPDATE_REQUEST });
+//   const { data } = await axios.put("/api/users/updatePass", {
+//     pass,
+//   });
+//   if (data.err) {
+//     dispatch({ type: USER_UPDATE_FAIL });
+//   } else {
+//     dispatch({ type: USER_UPDATE_SUCCESS });
+//   }
+// };
 
 api.interceptors.response.use(
   (config) => {
@@ -137,9 +140,7 @@ api.interceptors.response.use(
     if (error.config.url === "/api/isready") {
       try {
         return api.request(originalRequest);
-      } catch (err) {
-        console.log(err.message);
-      }
+      } catch (err) {}
     }
     throw error;
   }
@@ -151,9 +152,6 @@ export {
   logoutAction,
   unsuccess,
   resetPass,
-  resetForget,
-  tokenVerify,
-  updatePassword,
   resetState,
   getRefresh,
   api,

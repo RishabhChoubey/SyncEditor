@@ -1,26 +1,22 @@
-import React, { useState, useEffect, useCallback } from "react";
-import Quill from "quill";
 import "quill/dist/quill.snow.css";
-import socketio from "socket.io-client";
+import React, { useEffect, useState } from "react";
 
-import "./TextEditor.css";
-import copy from "../assets/link.png";
-import { useParams, useNavigate, useSearchParams } from "react-router-dom";
-import Cookie from "js-cookie";
 import { useSelector } from "react-redux";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import copy from "../assets/link.png";
+import useChangeState from "../utility/useChangeState";
 import useEditor from "../utility/useEditor";
 import useSocket from "../utility/useSocket";
-import useChangeState from "../utility/useChangeState";
-import Loading from "./Loading";
+import "./TextEditor.css";
 
 const TextEditor = (props) => {
   const navigate = useNavigate();
   const url = window.location;
-  console.log(url.href);
+
   const [searchParams] = useSearchParams();
   const last = searchParams.get("last");
   const { id: documentId } = useParams();
-  console.log(documentId, " ", last);
+
   const [socket, setsocket] = useState();
 
   const [quill, setquill] = useState();
@@ -28,10 +24,8 @@ const TextEditor = (props) => {
   const onFocus = (e) => {
     if (document.visibilityState == "hidden") {
       intervalTime = setInterval(() => {
-        console.log("refresh....");
         window.location.reload();
-      }, 60000);
-      console.log(intervalTime);
+      }, 30000);
     }
     if (document.visibilityState == "visible") {
       clearInterval(intervalTime);

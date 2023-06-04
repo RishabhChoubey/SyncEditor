@@ -6,7 +6,6 @@ function useChangeState(quill, socket, documentId, user, participant) {
   useEffect(() => {
     if (quill == null || socket == null) return;
     const handler = (delta, oldDelta, source) => {
-      console.log(delta, source);
       if (source !== "user") return;
       socket.emit("send-changes", delta);
     };
@@ -20,7 +19,6 @@ function useChangeState(quill, socket, documentId, user, participant) {
   useEffect(() => {
     if (quill == null || socket == null) return;
     const handler = (delta) => {
-      console.log("data update");
       quill.updateContents(delta);
       quill.focus();
     };
@@ -35,7 +33,6 @@ function useChangeState(quill, socket, documentId, user, participant) {
     if (quill == null || socket == null) return;
 
     socket.on("load-documents", (response) => {
-      console.log(document, "datatata");
       if (response.error) {
         navigate("/");
         alert("Your are not allowed in this doc");
